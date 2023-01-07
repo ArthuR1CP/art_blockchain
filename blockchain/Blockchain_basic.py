@@ -1,4 +1,6 @@
 import datetime
+import hashlib
+import json
 
 class Blockchain:
 
@@ -40,22 +42,27 @@ class Blockchain:
 		return hashlib.sha256(encoded_block).hexdigest()
 
 	def chain_valid(self, chain):
-		previous_block = chain[0]
+		last_block = chain[0]
 		block_index = 1
-
+		print(f'{last_block}')
+		print(f'{block}')
+		print("\n-----------\n")
+		
+		# Check that the hash of the block is correct
+		last_block_hash = self.hash(last_block)
 		while block_index < len(chain):
 			block = chain[block_index]
-			if block['previous_hash'] != self.hash(previous_block):
+			if block['previous_hash'] != last_block_hash:
 				return False
 
-			previous_proof = previous_block['proof']
+			previous_proof = last_block['proof']
 			proof = block['proof']
 			hash_operation = hashlib.sha256(
 				str(proof**2 - previous_proof**2).encode()).hexdigest()
 
 			if hash_operation[:5] != '00000':
 				return False
-			previous_block = block
+			last_block = block
 			block_index += 1
 
 		return True
