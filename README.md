@@ -14,7 +14,7 @@ Blockchain is a time-stamped decentralized series of fixed records that contains
 ## Tests
 
 1. Run UnitTests
-    * `$ python3 -m unittest tests/test_blockchain.py"
+    * `$ python3 -m unittest tests/test_blockchain.py`
 
 
 ## Blockchain API
