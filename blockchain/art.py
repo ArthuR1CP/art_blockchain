@@ -1,9 +1,4 @@
-import hashlib
-import json
-from time import time
-from urllib.parse import urlparse
 from uuid import uuid4
-import requests
 from flask import Flask, jsonify, request
 
 from Blockchain import Blockchain
@@ -14,6 +9,7 @@ app = Flask(__name__)
 
 # Generate a globally unique address for node
 node_identifier = str(uuid4()).replace('-', '')
+print("Node: " + node_identifier)
 
 # Instantiate the Blockchain
 blockchain = Blockchain()
@@ -38,7 +34,7 @@ def mine():
     block = blockchain.new_block(proof, previous_hash)
 
     response = {
-        'message': "New Block Forged",
+        'message': "Forged new block",
         'index': block['index'],
         'transactions': block['transactions'],
         'proof': block['proof'],
@@ -111,7 +107,7 @@ if __name__ == '__main__':
     from argparse import ArgumentParser
 
     parser = ArgumentParser()
-    parser.add_argument('-p', '--port', default=5001, type=int, help='port to listen on')
+    parser.add_argument('-p', '--port', default=5001, type=int, help='Listen Port')
     args = parser.parse_args()
     port = args.port
 
